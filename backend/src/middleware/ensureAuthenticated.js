@@ -2,7 +2,9 @@ const tokens = require("../database/tokens");
 const users = require("../database/user");
 
 const ensureAutenticated = (request, response, next) => {
-  const token = request.headers.authorization;
+  const authorization = request.headers.authorization;
+
+  const [, token] = authorization.split(" ");
 
   if (!token) {
     return response
