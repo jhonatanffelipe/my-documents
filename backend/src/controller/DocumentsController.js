@@ -33,11 +33,11 @@ class DocumentsController {
 
     if (!initial_date || !final_date) {
       return response
+        .status(400)
         .json({
           status: "error",
           message: "Data inicial e final são obrigatórias",
         })
-        .status(400)
         .send();
     }
 
@@ -70,11 +70,11 @@ class DocumentsController {
 
     if (!id) {
       return response
+        .status(400)
         .json({
           status: "error",
           message: "Id é obrigatório",
         })
-        .status(400)
         .send();
     }
 
@@ -87,21 +87,21 @@ class DocumentsController {
 
     if (!author) {
       return response
+        .status(400)
         .json({
           status: "error",
           message: "Parâmetro author é obrigatório",
         })
-        .status(400)
         .send();
     }
 
     if (!title) {
       return response
+        .status(400)
         .json({
           status: "error",
           message: "Parâmetro title é obrigatório",
         })
-        .status(400)
         .send();
     }
 
@@ -123,21 +123,21 @@ class DocumentsController {
 
     if (!author) {
       return response
+        .status(400)
         .json({
           status: "error",
           message: "Parâmetro author é obrigatório",
         })
-        .status(400)
         .send();
     }
 
     if (!title) {
       return response
+        .status(400)
         .json({
           status: "error",
           message: "Parâmetro title é obrigatório",
         })
-        .status(400)
         .send();
     }
 

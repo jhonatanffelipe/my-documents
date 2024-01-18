@@ -2,7 +2,9 @@ const express = require("express");
 const swaggerUi = require("swagger-ui-express");
 
 const swaggerFile = require("./docs/swagger.json");
+
 const documentsRouter = require("./router/documents.routes");
+const sessionRouter = require("./router/session.routes");
 
 const app = express();
 
@@ -12,6 +14,7 @@ const PORT = 3000;
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
+app.use("/session", sessionRouter);
 app.use("/documents", documentsRouter);
 
 app.listen(PORT, () => {

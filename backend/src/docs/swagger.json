@@ -1,594 +1,90 @@
 {
    "openapi": "3.1.0",
    "info": {
-      "title": "Pedido Web",
+      "title": "My Documents",
       "version": "1.0.0",
       "contact": {
          "email": ""
       }
    },
    "paths": {
-      "/session": {
+      "/documents": {
          "post": {
             "tags": [
-               "Authentication."
+               "Create documents."
             ],
-            "summary": "Authentication.",
-            "description": "Route responsible for performing authentication on the Pedido Web platform.",
+            "summary": "Create documents.",
+            "description": "Create a new document in the application.",
             "requestBody": {
                "content": {
                   "application/json": {
                      "schema": {
-                        "$ref": "#/definitions/Session"
-                     }
-                  }
-               }
-            },
-            "responses": {
-               "200": {
-                  "description": "Success",
-                  "content": {
-                     "application/json": {
-                        "schema": {
-                           "$ref": "#/definitions/SessionResponseSuccess"
-                        }
-                     }
-                  }
-               },
-               "401": {
-                  "description": "Unauthorized",
-                  "content": {
-                     "application/json": {
-                        "schema": {
-                           "$ref": "#/definitions/SessionUnauthorized"
-                        }
-                     }
-                  }
-               }
-            }
-         }
-      },
-      "/api/carriers": {
-         "post": {
-            "tags": [
-               "Create Carriers."
-            ],
-            "summary": "Create Carriers.",
-            "description": "Route responsible for creating carriers.",
-            "security": [
-               {
-                  "bearerAuth": []
-               }
-            ],
-            "parameters": [
-               {
-                  "name": "x-tenant",
-                  "in": "header",
-                  "required": true,
-                  "type": "string"
-               }
-            ],
-            "requestBody": {
-               "content": {
-                  "application/json": {
-                     "schema": {
-                        "$ref": "#/definitions/Carriers"
+                        "$ref": "#/definitions/Documents"
                      }
                   }
                }
             },
             "responses": {
                "201": {
-                  "description": "Success",
-                  "content": {
-                     "application/json": {
-                        "schema": {
-                           "$ref": "#/definitions/CarriersResponseSuccess"
-                        }
-                     }
-                  }
+                  "description": "Created"
                },
-               "500": {
-                  "description": "Error",
+               "400": {
+                  "description": "Error: Bad Request",
                   "content": {
                      "application/json": {
                         "schema": {
-                           "$ref": "#/definitions/CarriersResponseError"
+                           "$ref": "#/definitions/DocumentsError"
                         }
                      }
                   }
                }
             }
-         }
-      },
-      "/api/carriers/{id}": {
-         "put": {
+         },
+         "get": {
             "tags": [
-               "Update Carriers."
+               "List all documents."
             ],
-            "summary": "Update Carriers.",
-            "description": "Route responsible for Update carriers.",
-            "security": [
-               {
-                  "bearerAuth": []
-               }
-            ],
+            "summary": "List all documents.",
+            "description": "Lists all documents that fall within the specified competence.",
             "parameters": [
                {
-                  "name": "x-tenant",
-                  "in": "header",
+                  "name": "initial_date",
+                  "in": "query",
+                  "description": "The start date for the query (format: YYYY-MM-DD)",
                   "required": true,
-                  "type": "string"
+                  "schema": {
+                     "type": "string",
+                     "format": "date"
+                  }
                },
                {
-                  "name": "id",
-                  "in": "path",
-                  "required": true
-               }
-            ],
-            "requestBody": {
-               "content": {
-                  "application/json": {
-                     "schema": {
-                        "$ref": "#/definitions/Carriers"
-                     }
+                  "name": "final_date",
+                  "in": "query",
+                  "description": "The end date for the query (format: YYYY-MM-DD)",
+                  "required": true,
+                  "schema": {
+                     "type": "string",
+                     "format": "date"
                   }
                }
-            },
+            ],
             "responses": {
                "200": {
-                  "description": "Success",
+                  "description": "OK",
                   "content": {
                      "application/json": {
                         "schema": {
-                           "$ref": "#/definitions/CarriersResponseSuccess"
-                        }
-                     }
-                  }
-               },
-               "500": {
-                  "description": "Error",
-                  "content": {
-                     "application/json": {
-                        "schema": {
-                           "$ref": "#/definitions/CarriersResponseError"
-                        }
-                     }
-                  }
-               }
-            }
-         }
-      },
-      "/api/sellers": {
-         "post": {
-            "tags": [
-               "Create Sellers."
-            ],
-            "summary": "Create Sellers.",
-            "description": "Route responsible for creating types of sellers.",
-            "security": [
-               {
-                  "bearerAuth": []
-               }
-            ],
-            "parameters": [
-               {
-                  "name": "x-tenant",
-                  "in": "header",
-                  "required": true,
-                  "type": "string"
-               }
-            ],
-            "requestBody": {
-               "content": {
-                  "application/json": {
-                     "schema": {
-                        "$ref": "#/definitions/Sellers"
-                     }
-                  }
-               }
-            },
-            "responses": {
-               "201": {
-                  "description": "Success",
-                  "content": {
-                     "application/json": {
-                        "schema": {
-                           "$ref": "#/definitions/SellersResponseSuccess"
+                           "$ref": "#/definitions/DocumentsListAllResponse"
                         }
                      }
                   }
                },
                "400": {
-                  "description": "Error",
+                  "description": "Error: Bad Request",
                   "content": {
                      "application/json": {
                         "schema": {
-                           "$ref": "#/definitions/SellersResponseError"
-                        }
-                     }
-                  }
-               }
-            }
-         }
-      },
-      "/api/sellers/{id}": {
-         "put": {
-            "tags": [
-               "Update Sellers."
-            ],
-            "summary": "Update Sellers.",
-            "description": "Route responsible for Update sellers.",
-            "security": [
-               {
-                  "bearerAuth": []
-               }
-            ],
-            "parameters": [
-               {
-                  "name": "x-tenant",
-                  "in": "header",
-                  "required": true,
-                  "type": "string"
-               },
-               {
-                  "name": "id",
-                  "in": "path",
-                  "required": true
-               }
-            ],
-            "requestBody": {
-               "content": {
-                  "application/json": {
-                     "schema": {
-                        "$ref": "#/definitions/SellersUpdate"
-                     }
-                  }
-               }
-            },
-            "responses": {
-               "200": {
-                  "description": "Success",
-                  "content": {
-                     "application/json": {
-                        "schema": {
-                           "$ref": "#/definitions/SellersResponseSuccess"
-                        }
-                     }
-                  }
-               },
-               "400": {
-                  "description": "Error",
-                  "content": {
-                     "application/json": {
-                        "schema": {
-                           "$ref": "#/definitions/SellersResponseError"
-                        }
-                     }
-                  }
-               }
-            }
-         }
-      },
-      "/api/customers": {
-         "post": {
-            "tags": [
-               "Create Customers."
-            ],
-            "summary": "Create customers.",
-            "description": "Route responsible for creating types of customers.",
-            "security": [
-               {
-                  "bearerAuth": []
-               }
-            ],
-            "parameters": [
-               {
-                  "name": "x-tenant",
-                  "in": "header",
-                  "required": true,
-                  "type": "string"
-               }
-            ],
-            "requestBody": {
-               "content": {
-                  "application/json": {
-                     "schema": {
-                        "$ref": "#/definitions/Customers"
-                     }
-                  }
-               }
-            },
-            "responses": {
-               "201": {
-                  "description": "Success",
-                  "content": {
-                     "application/json": {
-                        "schema": {
-                           "$ref": "#/definitions/CustomersResponseSuccess"
-                        }
-                     }
-                  }
-               },
-               "400": {
-                  "description": "Error",
-                  "content": {
-                     "application/json": {
-                        "schema": {
-                           "$ref": "#/definitions/CustomersResponseError"
-                        }
-                     }
-                  }
-               }
-            }
-         }
-      },
-      "/api/customers/{id}": {
-         "put": {
-            "tags": [
-               "Update Customers."
-            ],
-            "summary": "Update Customers.",
-            "description": "Route responsible for Update customers.",
-            "security": [
-               {
-                  "bearerAuth": []
-               }
-            ],
-            "parameters": [
-               {
-                  "name": "x-tenant",
-                  "in": "header",
-                  "required": true,
-                  "type": "string"
-               },
-               {
-                  "name": "id",
-                  "in": "path",
-                  "required": true
-               }
-            ],
-            "requestBody": {
-               "content": {
-                  "application/json": {
-                     "schema": {
-                        "$ref": "#/definitions/CustomersUpdate"
-                     }
-                  }
-               }
-            },
-            "responses": {
-               "204": {
-                  "description": "Success"
-               },
-               "400": {
-                  "description": "Error",
-                  "content": {
-                     "application/json": {
-                        "schema": {
-                           "$ref": "#/definitions/CustomersResponseError"
-                        }
-                     }
-                  }
-               }
-            }
-         }
-      },
-      "/api/products": {
-         "post": {
-            "tags": [
-               "Create Products."
-            ],
-            "summary": "Create Products.",
-            "description": "Route responsible for creating types of products.",
-            "security": [
-               {
-                  "bearerAuth": []
-               }
-            ],
-            "parameters": [
-               {
-                  "name": "x-tenant",
-                  "in": "header",
-                  "required": true,
-                  "type": "string"
-               }
-            ],
-            "requestBody": {
-               "content": {
-                  "application/json": {
-                     "schema": {
-                        "$ref": "#/definitions/Products"
-                     }
-                  }
-               }
-            },
-            "responses": {
-               "201": {
-                  "description": "Success",
-                  "content": {
-                     "application/json": {
-                        "schema": {
-                           "$ref": "#/definitions/ProductsResponseSuccess"
-                        }
-                     }
-                  }
-               },
-               "400": {
-                  "description": "Error",
-                  "content": {
-                     "application/json": {
-                        "schema": {
-                           "$ref": "#/definitions/ProductsResponseError"
-                        }
-                     }
-                  }
-               }
-            }
-         }
-      },
-      "/api/products/{id}": {
-         "put": {
-            "tags": [
-               "Update Products."
-            ],
-            "summary": "Update Products.",
-            "description": "Route responsible for Update products.",
-            "security": [
-               {
-                  "bearerAuth": []
-               }
-            ],
-            "parameters": [
-               {
-                  "name": "x-tenant",
-                  "in": "header",
-                  "required": true,
-                  "type": "string"
-               },
-               {
-                  "name": "id",
-                  "in": "path",
-                  "required": true
-               }
-            ],
-            "requestBody": {
-               "content": {
-                  "application/json": {
-                     "schema": {
-                        "$ref": "#/definitions/Products"
-                     }
-                  }
-               }
-            },
-            "responses": {
-               "200": {
-                  "description": "Success",
-                  "content": {
-                     "application/json": {
-                        "schema": {
-                           "$ref": "#/definitions/ProductsResponseSuccess"
-                        }
-                     }
-                  }
-               },
-               "400": {
-                  "description": "Error",
-                  "content": {
-                     "application/json": {
-                        "schema": {
-                           "$ref": "#/definitions/ProductsResponseError"
-                        }
-                     }
-                  }
-               }
-            }
-         }
-      },
-      "/api/orders": {
-         "post": {
-            "tags": [
-               "Create Orders."
-            ],
-            "summary": "Create Orders.",
-            "description": "Route responsible for creating types of orders.",
-            "security": [
-               {
-                  "bearerAuth": []
-               }
-            ],
-            "parameters": [
-               {
-                  "name": "x-tenant",
-                  "in": "header",
-                  "required": true,
-                  "type": "string"
-               }
-            ],
-            "requestBody": {
-               "content": {
-                  "application/json": {
-                     "schema": {
-                        "$ref": "#/definitions/Orders"
-                     }
-                  }
-               }
-            },
-            "responses": {
-               "201": {
-                  "description": "Success",
-                  "content": {
-                     "application/json": {
-                        "schema": {
-                           "$ref": "#/definitions/OrdersResponseSuccess"
-                        }
-                     }
-                  }
-               },
-               "400": {
-                  "description": "Error",
-                  "content": {
-                     "application/json": {
-                        "schema": {
-                           "$ref": "#/definitions/OrdersResponseError"
-                        }
-                     }
-                  }
-               }
-            }
-         }
-      },
-      "/api/orders/{id}": {
-         "put": {
-            "tags": [
-               "Update Orders."
-            ],
-            "summary": "Update Orders.",
-            "description": "Route responsible for Update orders.",
-            "security": [
-               {
-                  "bearerAuth": []
-               }
-            ],
-            "parameters": [
-               {
-                  "name": "x-tenant",
-                  "in": "header",
-                  "required": true,
-                  "type": "string"
-               },
-               {
-                  "name": "id",
-                  "in": "path",
-                  "required": true
-               }
-            ],
-            "requestBody": {
-               "content": {
-                  "application/json": {
-                     "schema": {
-                        "$ref": "#/definitions/Orders"
-                     }
-                  }
-               }
-            },
-            "responses": {
-               "200": {
-                  "description": "Success",
-                  "content": {
-                     "application/json": {
-                        "schema": {
-                           "$ref": "#/definitions/OrdersResponseSuccess"
-                        }
-                     }
-                  }
-               },
-               "400": {
-                  "description": "Error",
-                  "content": {
-                     "application/json": {
-                        "schema": {
-                           "$ref": "#/definitions/OrdersResponseError"
+                           "$ref": "#/definitions/DocumentsError"
                         }
                      }
                   }
@@ -598,61 +94,18 @@
       }
    },
    "definitions": {
-      "Session": {
+      "Documents": {
          "type": "object",
          "properties": {
-            "username": {
+            "author": {
                "type": "string"
             },
-            "password": {
+            "title": {
                "type": "string"
             }
          }
       },
-      "SessionResponseSuccess": {
-         "type": "object",
-         "properties": {
-            "token": {
-               "type": "object",
-               "properties": {
-                  "id": {
-                     "type": "string"
-                  },
-                  "admin": {
-                     "type": "boolean"
-                  },
-                  "username": {
-                     "type": "string"
-                  },
-                  "fullName": {
-                     "type": "string"
-                  },
-                  "description": {
-                     "type": "string"
-                  },
-                  "email": {
-                     "type": "string"
-                  },
-                  "tenantDomain": {
-                     "type": "string"
-                  },
-                  "tenantName": {
-                     "type": "string"
-                  },
-                  "tenantLocale": {
-                     "type": "string"
-                  },
-                  "blocked": {
-                     "type": "boolean"
-                  },
-                  "resources": {
-                     "type": "array"
-                  }
-               }
-            }
-         }
-      },
-      "SessionUnauthorized": {
+      "DocumentsError": {
          "type": "object",
          "properties": {
             "status": {
@@ -663,467 +116,24 @@
             }
          }
       },
-      "Carriers": {
-         "type": "object",
-         "properties": {
-            "code": {
-               "type": "string"
-            },
-            "name": {
-               "type": "string"
-            }
-         }
-      },
-      "CarriersResponseSuccess": {
-         "type": "object",
-         "properties": {
-            "id": {
-               "type": "string"
-            },
-            "code": {
-               "type": "string"
-            },
-            "name": {
-               "type": "string"
-            },
-            "created_at": {
-               "type": "string"
-            },
-            "updated_at": {
-               "type": "string"
-            }
-         }
-      },
-      "CarriersResponseError": {
-         "type": "object",
-         "properties": {
-            "status": {
-               "type": "string"
-            },
-            "message": {
-               "type": "string"
-            }
-         }
-      },
-      "Sellers": {
-         "type": "object",
-         "properties": {
-            "code": {
-               "type": "string"
-            },
-            "name": {
-               "type": "string"
-            },
-            "phoneNumber": {
-               "type": "string"
-            },
-            "email": {
-               "type": "string"
-            },
-            "salesRegion": {
-               "type": "object",
-               "properties": {
-                  "code": {
-                     "type": "integer"
-                  },
-                  "name": {
-                     "type": "string"
-                  }
+      "DocumentsListAllResponse": {
+         "type": "array",
+         "items": {
+            "type": "object",
+            "properties": {
+               "id": {
+                  "type": "string"
+               },
+               "author": {
+                  "type": "string"
+               },
+               "title": {
+                  "type": "string"
+               },
+               "updated_at": {
+                  "type": "string"
                }
             }
-         }
-      },
-      "SellersUpdate": {
-         "type": "object",
-         "properties": {
-            "name": {
-               "type": "string"
-            },
-            "phoneNumber": {
-               "type": "string"
-            },
-            "email": {
-               "type": "string"
-            },
-            "salesRegion": {
-               "type": "object",
-               "properties": {
-                  "code": {
-                     "type": "integer"
-                  },
-                  "name": {
-                     "type": "string"
-                  }
-               }
-            }
-         }
-      },
-      "SellersResponseSuccess": {
-         "type": "object",
-         "properties": {
-            "id": {
-               "type": "string"
-            },
-            "code": {
-               "type": "string"
-            },
-            "name": {
-               "type": "string"
-            },
-            "created_at": {
-               "type": "string"
-            },
-            "updated_at": {
-               "type": "string"
-            }
-         }
-      },
-      "SellersResponseError": {
-         "type": "object",
-         "properties": {
-            "status": {
-               "type": "string"
-            },
-            "message": {
-               "type": "string"
-            }
-         }
-      },
-      "Customers": {
-         "type": "object",
-         "properties": {
-            "code": {
-               "type": "string"
-            },
-            "corporateName": {
-               "type": "string"
-            },
-            "tradeName": {
-               "type": "string"
-            },
-            "corporateDocument": {
-               "type": "string"
-            },
-            "stateRegistration": {
-               "type": "string"
-            },
-            "phoneNumber": {
-               "type": "string"
-            },
-            "email": {
-               "type": "string"
-            },
-            "contact": {
-               "type": "string"
-            },
-            "sellers": {
-               "type": "array",
-               "properties": {
-                  "id": {
-                     "type": "string"
-                  }
-               }
-            },
-            "address": {
-               "type": "object",
-               "properties": {
-                  "addressTypeId": {
-                     "type": "integer"
-                  },
-                  "street": {
-                     "type": "string"
-                  },
-                  "number": {
-                     "type": "string"
-                  },
-                  "complement": {
-                     "type": "string"
-                  },
-                  "neighborhood": {
-                     "type": "string"
-                  },
-                  "city": {
-                     "type": "string"
-                  },
-                  "state": {
-                     "type": "string"
-                  },
-                  "postalCode": {
-                     "type": "string"
-                  },
-                  "country": {
-                     "type": "string"
-                  }
-               }
-            },
-            "salesRegion": {
-               "type": "object",
-               "properties": {
-                  "code": {
-                     "type": "integer"
-                  },
-                  "name": {
-                     "type": "string"
-                  }
-               }
-            }
-         }
-      },
-      "CustomersUpdate": {
-         "type": "object",
-         "properties": {
-            "corporateName": {
-               "type": "string"
-            },
-            "tradeName": {
-               "type": "string"
-            },
-            "corporateDocument": {
-               "type": "string"
-            },
-            "stateRegistration": {
-               "type": "string"
-            },
-            "phoneNumber": {
-               "type": "string"
-            },
-            "email": {
-               "type": "string"
-            },
-            "contact": {
-               "type": "string"
-            },
-            "sellers": {
-               "type": "array",
-               "properties": {
-                  "id": {
-                     "type": "string"
-                  }
-               }
-            },
-            "address": {
-               "type": "object",
-               "properties": {
-                  "addressTypeId": {
-                     "type": "integer"
-                  },
-                  "street": {
-                     "type": "string"
-                  },
-                  "number": {
-                     "type": "string"
-                  },
-                  "complement": {
-                     "type": "string"
-                  },
-                  "neighborhood": {
-                     "type": "string"
-                  },
-                  "city": {
-                     "type": "string"
-                  },
-                  "state": {
-                     "type": "string"
-                  },
-                  "postalCode": {
-                     "type": "string"
-                  },
-                  "country": {
-                     "type": "string"
-                  }
-               }
-            },
-            "salesRegion": {
-               "type": "object",
-               "properties": {
-                  "code": {
-                     "type": "integer"
-                  },
-                  "name": {
-                     "type": "string"
-                  }
-               }
-            }
-         }
-      },
-      "CustomersResponseSuccess": {
-         "type": "object",
-         "properties": {
-            "id": {
-               "type": "string"
-            },
-            "code": {
-               "type": "string"
-            },
-            "name": {
-               "type": "string"
-            },
-            "created_at": {
-               "type": "string"
-            },
-            "updated_at": {
-               "type": "string"
-            }
-         }
-      },
-      "CustomersResponseError": {
-         "type": "object",
-         "properties": {
-            "status": {
-               "type": "string"
-            },
-            "message": {
-               "type": "string"
-            }
-         }
-      },
-      "Products": {
-         "type": "object",
-         "properties": {
-            "sku": {
-               "type": "string"
-            },
-            "derivation": {
-               "type": "string"
-            },
-            "description": {
-               "type": "string"
-            },
-            "masterPacking": {
-               "type": "integer"
-            },
-            "measurementUnit": {
-               "type": "string"
-            },
-            "url": {
-               "type": "string"
-            },
-            "image": {
-               "type": "string"
-            },
-            "ncm": {
-               "type": "string"
-            },
-            "IPI_Percent": {
-               "type": "integer"
-            },
-            "width": {
-               "type": "integer"
-            },
-            "height": {
-               "type": "integer"
-            },
-            "grossWeight": {
-               "type": "integer"
-            },
-            "barcode": {
-               "type": "integer"
-            },
-            "additionalInformation": {
-               "type": "string"
-            },
-            "category": {
-               "type": "object",
-               "properties": {
-                  "code": {
-                     "type": "string"
-                  },
-                  "name": {
-                     "type": "string"
-                  }
-               }
-            }
-         }
-      },
-      "ProductsResponseSuccess": {
-         "type": "object",
-         "properties": {
-            "id": {
-               "type": "string"
-            },
-            "code": {
-               "type": "string"
-            },
-            "name": {
-               "type": "string"
-            },
-            "created_at": {
-               "type": "string"
-            },
-            "updated_at": {
-               "type": "string"
-            }
-         }
-      },
-      "ProductsResponseError": {
-         "type": "object",
-         "properties": {
-            "status": {
-               "type": "string"
-            },
-            "message": {
-               "type": "string"
-            }
-         }
-      },
-      "Orders": {
-         "type": "object",
-         "properties": {
-            "branchOfficeId": {
-               "type": "string"
-            },
-            "orderTypeId": {
-               "type": "integer"
-            },
-            "customerId": {
-               "type": "string"
-            },
-            "sellerId": {
-               "type": "string"
-            },
-            "orderNumber": {
-               "type": "string"
-            }
-         }
-      },
-      "OrdersResponseSuccess": {
-         "type": "object",
-         "properties": {
-            "id": {
-               "type": "string"
-            },
-            "code": {
-               "type": "string"
-            },
-            "name": {
-               "type": "string"
-            },
-            "created_at": {
-               "type": "string"
-            },
-            "updated_at": {
-               "type": "string"
-            }
-         }
-      },
-      "OrdersResponseError": {
-         "type": "object",
-         "properties": {
-            "status": {
-               "type": "string"
-            },
-            "message": {
-               "type": "string"
-            }
-         }
-      }
-   },
-   "components": {
-      "securitySchemes": {
-         "bearerAuth": {
-            "type": "http",
-            "scheme": "bearer",
-            "bearerFormat": "JWT"
          }
       }
    }
