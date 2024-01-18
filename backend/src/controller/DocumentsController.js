@@ -5,25 +5,25 @@ const documents = [
     id: uuidv4(),
     author: "Heytor",
     updated_at: new Date("2023-08-26"),
-    content: "",
+    title: "",
   },
   {
     id: uuidv4(),
     author: "Jhonatan",
     updated_at: new Date("2021-10-07"),
-    content: "",
+    title: "",
   },
   {
     id: uuidv4(),
     author: "Rafael",
     updated_at: new Date("2021-02-28"),
-    content: "",
+    title: "",
   },
   {
     id: uuidv4(),
     author: "Eduardo",
     updated_at: new Date("2022-01-05"),
-    content: "",
+    title: "",
   },
 ];
 
@@ -83,7 +83,7 @@ class DocumentsController {
   }
 
   create(request, response) {
-    const { author, content } = request.body;
+    const { author, title } = request.body;
 
     if (!author) {
       return response
@@ -95,11 +95,11 @@ class DocumentsController {
         .send();
     }
 
-    if (!content) {
+    if (!title) {
       return response
         .json({
           status: "error",
-          message: "Parâmetro content é obrigatório",
+          message: "Parâmetro title é obrigatório",
         })
         .status(400)
         .send();
@@ -108,7 +108,7 @@ class DocumentsController {
     documents.push({
       id: uuidv4(),
       author,
-      content,
+      title,
       updated_at: new Date(),
     });
 
@@ -117,7 +117,7 @@ class DocumentsController {
 
   update(request, response) {
     const { id } = request.params;
-    const { author, content } = request.body;
+    const { author, title } = request.body;
 
     const index = documents.findIndex((doc) => doc.id === id);
 
@@ -131,11 +131,11 @@ class DocumentsController {
         .send();
     }
 
-    if (!content) {
+    if (!title) {
       return response
         .json({
           status: "error",
-          message: "Parâmetro content é obrigatório",
+          message: "Parâmetro title é obrigatório",
         })
         .status(400)
         .send();
@@ -144,7 +144,7 @@ class DocumentsController {
     documents[index] = {
       id,
       author,
-      content,
+      title,
       updated_at: new Date(),
     };
     return response.status(204).send();
