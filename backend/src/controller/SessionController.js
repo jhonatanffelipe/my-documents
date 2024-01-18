@@ -51,6 +51,7 @@ class SessionController {
     });
 
     return response.json({
+      id: userExists.id,
       email: userExists.email,
       name: userExists.name,
       token,

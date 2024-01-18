@@ -6,7 +6,7 @@ const ensureAdministrator = (request, response, next) => {
       .status(401)
       .json({
         status: "error",
-        message: "Usuário sem permissão para realizar essa operação.",
+        message: "Usuário sem permissão para acessar este recurso.",
       })
       .send();
   }

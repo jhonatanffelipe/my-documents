@@ -8,6 +8,41 @@
       }
    },
    "paths": {
+      "/session": {
+         "post": {
+            "tags": [
+               "Authentication"
+            ],
+            "summary": "Authentication",
+            "description": "Allows the user to authenticate on the platform",
+            "produces": [
+               "application/json"
+            ],
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "$ref": "#/definitions/Session"
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": "Success",
+                  "schema": {
+                     "$ref": "#definitions/SessionResponseSuccess"
+                  }
+               },
+               "401": {
+                  "description": "Unauthorized",
+                  "schema": {
+                     "$ref": "#definitions/SessionUnauthorized"
+                  }
+               }
+            }
+         }
+      },
       "/documents": {
          "post": {
             "tags": [
@@ -15,6 +50,14 @@
             ],
             "summary": "Create documents.",
             "description": "Create a new document in the application.",
+            "parameters": [
+               {
+                  "name": "token",
+                  "in": "header",
+                  "required": true,
+                  "type": "string"
+               }
+            ],
             "requestBody": {
                "content": {
                   "application/json": {
@@ -47,6 +90,12 @@
             "summary": "List all documents.",
             "description": "Lists all documents that fall within the specified competence.",
             "parameters": [
+               {
+                  "name": "token",
+                  "in": "header",
+                  "required": true,
+                  "type": "string"
+               },
                {
                   "name": "initial_date",
                   "in": "query",
@@ -94,6 +143,45 @@
       }
    },
    "definitions": {
+      "Session": {
+         "type": "object",
+         "properties": {
+            "email": {
+               "type": "string"
+            },
+            "password": {
+               "type": "string"
+            }
+         }
+      },
+      "SessionResponseSuccess": {
+         "type": "object",
+         "properties": {
+            "id": {
+               "type": "integer"
+            },
+            "email": {
+               "type": "integer"
+            },
+            "name": {
+               "type": "string"
+            },
+            "token": {
+               "type": "string"
+            }
+         }
+      },
+      "SessionUnauthorized": {
+         "type": "object",
+         "properties": {
+            "status": {
+               "type": "string"
+            },
+            "message": {
+               "type": "string"
+            }
+         }
+      },
       "Documents": {
          "type": "object",
          "properties": {

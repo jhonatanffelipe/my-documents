@@ -2,9 +2,7 @@ const tokens = require("../database/tokens");
 const users = require("../database/user");
 
 const ensureAutenticated = (request, response, next) => {
-  const authorization = request.headers.authorization;
-
-  const [, token] = authorization.split(" ");
+  const { token } = request.headers;
 
   if (!token) {
     return response
@@ -16,6 +14,8 @@ const ensureAutenticated = (request, response, next) => {
       .send();
   }
 
+  console.log(token);
+  console.log("aqui");
   const tokenExists = tokens.find((t) => t.token === token);
 
   if (!tokenExists) {
